@@ -1,31 +1,23 @@
-// import axios from "axios";
-// import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Main from './components/Main';
-import TestAPI from './components/TestAPI';
-import TestWs from './components/TestWs';
-import NotFound from './components/NotFound';
+import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  // const callApi = async () => {
-  //   // axios.get("/testAPI").then((res) => console.log(res.data.test));
-  // };
-
-  // useEffect(() => {
-  //   callApi();
-  // }, []);
-
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />}></Route>
-          <Route path="/testAPI" element={<TestAPI />}></Route>
-          <Route path="/testWs" element={<TestWs />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }
