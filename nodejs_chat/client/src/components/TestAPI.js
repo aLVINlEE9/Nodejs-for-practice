@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const TestAPI = () => {
 	const [datas, setDatas] = useState("");
 	const callApi = async () => {
-		axios.get("/testAPI").then((res) => setDatas(`${res.data.test}`));
+		axios.get("/testAPI").then((res) => setDatas(`${res.data.result}`));
 	};
 
 	useEffect(() => {

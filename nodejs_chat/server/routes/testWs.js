@@ -1,17 +1,8 @@
 var express = require("express");
-var enableWs = require('express-ws')
-enableWs(express());
 var router = express.Router();
 
-
-router.get("/", (req, res, next) => {
-	res.end();
-});
-
-router.ws("/", (ws, req) => {
-	ws.on('connection', function connect(ws, req){
-		console.log("NEW USER CONNECT");
-	});
+router.get("/", function(req, res, next) {
+    res.send({result: "testWs is working properly"});
 });
 
 module.exports = router;
