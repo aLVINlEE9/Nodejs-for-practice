@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CommentList from "../list/CommentList"
 import TextInput from "../ui/TextInput";
 import Button from "../ui/Button";
+import * as websocketUtil from "../../socket";
 
 const Wrapper = styled.div`
 	padding: 16px;
@@ -50,39 +51,11 @@ const CommentLable = styled.p`
 
 
 function LoginPage(props) {
+	const { connection, msgMyUserId } = props;
 	const navigate = useNavigate();
 
 	const [nickName, setNickName] = useState("");
 
-	const allUserData = [];
-	let MY_USER_ID = "";
-	const connection = () => {
-		const ws = new WebSocket('ws://localhost:8080/ws');
-		const sendMyName = (sendingUserName) => {
-			let data = {"code": "connect_name", "name": sendingUserName, "user_id": MY_USER_ID};
-			ws.send(JSON.stringify(data));
-		}
-		ws.onmessage = (event) => {
-			let message = JSON.parse(event.data);
-			switch (message.code) {
-				case "my_user_id" :
-					MY_USER_ID = message.msg;
-					sendMyName(nickName);
-					alert("안녕하세요 " + nickName + " 님");
-					break ;
-				case "all_users" :
-					let ALL_WS = JSON.parse(message.msg);
-					ALL_WS.forEach((element, index) => {
-						allUserData.push(element.user_name);
-						props.updateUserData(allUserData);
-					});
-					break;
-				default :
-			}
-		}
-	};
-
-	
 
 	return (
 		<Wrapper>
@@ -106,7 +79,8 @@ function LoginPage(props) {
 				<Button 
 					title="입장"
 					onClick={() => {
-						connection();
+						websocketUtil.connect();
+						websocketUtil.msgMyUserId(nickName);
 						navigate("/chat");
 					}}
 				/>

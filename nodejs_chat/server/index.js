@@ -33,7 +33,13 @@ ws.on("connection", (websocket, req) => {
 				});
 				console.log(ALL_WS);
 				sendAllUsers();
-			break;
+				break;
+			case "send_message" :
+				ALL_WS.forEach((element, index) => {
+					let data = {"code": "chat_message", "msg": message.msg, "sender_name": message.name};
+					element.ws.send(JSON.stringify(data));
+				});
+				break;
 		}
 	})
 });

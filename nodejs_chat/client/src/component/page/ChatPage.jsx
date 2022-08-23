@@ -25,11 +25,18 @@ const Container = styled.div`
 	}
 `;
 
-const PostContainer = styled.div`
+const UserContainer = styled.div`
 	padding: 8px 16px;
 	border: 1px solid grey;
 	border-radius: 8px;
 	float: right;
+`;
+
+const MessageContainer = styled.div`
+	padding: 8px 16px;
+	border: 1px solid grey;
+	border-radius: 8px;
+	float: left;	
 `;
 
 const TitleText = styled.p`
@@ -49,13 +56,18 @@ const CommentLable = styled.p`
 `;
 
 function PostViewPage(props) {
-	const { allUserData } = props;
+	const { fMsgChatMessage, fMsgAllUsers, fSendMessage } = props;
 	const navigate = useNavigate();
 	const { postId } = useParams();
 
+	const [chatMessage, setChatMessage] = useState([]);
+	const [allUserData, setAllUsersData] = useState([]);
 	const [comment, setComment] = useState("");
 
-	console.log(allUserData)
+
+	setChatMessage(fMsgChatMessage(chatMessage));
+	setAllUsersData(fMsgAllUsers(allUserData));
+
 	// setAllUsersData(props.allUserData);
 	return (
 		<Wrapper>
@@ -66,7 +78,7 @@ function PostViewPage(props) {
 						navigate("/");
 					}}
 				/>
-				<PostContainer>
+				<UserContainer>
 					# 실시간 접속자
 					{allUserData.map((userName, index) => {
 					return (
@@ -77,7 +89,19 @@ function PostViewPage(props) {
 						</ContentText>
 						);
 					})}
-				</PostContainer>
+				</UserContainer>
+
+				<MessageContainer>
+					{chatMessage.map((message, index) => {
+						return (
+							<ContentText
+								key = {index}
+							>
+								{message}
+							</ContentText>
+						);
+					})}
+				</MessageContainer>
 
 				<CommentLable>댓글</CommentLable>
 				{/* <CommentList comments={post.comments} /> */}
@@ -92,7 +116,7 @@ function PostViewPage(props) {
 				<Button 
 					title="댓글 작성하기"
 					onClick={() => {
-						navigate("/");
+						fSendMessage(comment);
 					}}
 				/>
 			</Container>
