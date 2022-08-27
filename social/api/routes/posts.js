@@ -44,7 +44,7 @@ router.delete("/:id", async (req, res) => {
 	
 })
 
-// like & dislike a post
+// like or dislike a post
 router.put("/:id/like", async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -52,7 +52,7 @@ router.put("/:id/like", async (req, res) => {
 			await post.updateOne({ $push: { likes: req.body.userId } });
 			res.status(200).json("The post has been liked");
 		} else {
-			await post.updateOne({ $push: { likes: req.body.userId } });
+			await post.updateOne({ $pull: { likes: req.body.userId } });
 			res.status(200).json("The post has been disliked");
 		}
 	} catch (err) {
