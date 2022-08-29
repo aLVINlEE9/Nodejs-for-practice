@@ -42,7 +42,6 @@ router.delete("/:id", async (req, res) => {
 	} catch (err) {
 		res.status(500).json(err);
 	}
-	
 })
 
 // like or dislike a post
@@ -74,7 +73,7 @@ router.get("/:id", async (req, res) => {
 
 // get timeline posts
 router.get("/timeline/:userId", async (req, res) => {
-try {
+	try {
 	const currentUser = await User.findById(req.params.userId);
 	const userPosts = await Post.find({ userId: currentUser._id });
 	const friendPosts = await Promise.all(
@@ -83,7 +82,7 @@ try {
 	})
 	);
 	res.status(200).json(userPosts.concat(...friendPosts));
-} catch (err) {
+	} catch (err) {
 	res.status(500).json(err);
 }
 });
